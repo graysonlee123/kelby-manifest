@@ -12,12 +12,12 @@ app.use(express.json());
 app.use('/api', require('./api/api'));
 
 // Serve static files for React if in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-  app.get('*', (req, res) =>
-    res.sendFile(__dirname, 'client', 'build', 'index.html')
-  );
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static('client/build'));
+//   app.get('*', (req, res) =>
+//     res.sendFile(__dirname, 'client', 'build', 'index.html')
+//   );
+// }
 
 // Listen for requests
 app.listen(PORT, () => {
