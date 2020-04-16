@@ -11,13 +11,8 @@ app.use(express.json());
 // Define base routes
 app.use('/api', require('./api/api'));
 
-// Serve static files for React if in production
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static('client/build'));
-//   app.get('*', (req, res) =>
-//     res.sendFile(__dirname, 'client', 'build', 'index.html')
-//   );
-// }
+// Serve static files
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 // Listen for requests
 app.listen(PORT, () => {
