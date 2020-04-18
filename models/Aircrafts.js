@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const AircraftSchema = new mongoose.Schema({
   gross: {
-    weight: { type: Number, required: true },
+    weight: { type: Number },
   },
   usefulLoad: {
-    weight: { type: Number, required: true },
+    weight: { type: Number },
   },
   empty: {
     weight: { type: Number },
