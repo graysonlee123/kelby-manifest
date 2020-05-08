@@ -257,6 +257,24 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
+// * @route   PUT /api/aircraft/:id
+// ? @desc    Update an aircraft by ID
+// ! @access  Private
+router.put("/:id", auth, async (req, res) => {
+  try {
+    const dbAircraft = await Aircraft.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    res.json(dbAircraft);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(`Server error`);
+  }
+});
+
 // * @route   DELETE /api/aircraft/:id
 // ? @desc    Delete aircraft by ID
 // ! @access  Private
