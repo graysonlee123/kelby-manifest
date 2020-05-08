@@ -1,22 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { body, check, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 
 const Aircraft = require('../models/Aircrafts');
 
-// * @route   GET /api/
-// ? @desc    Test route
-// ! @access  Public
-router.get('/', (req, res) => {
-  res.json('yep');
-});
-
 // * @route   POST /api/aircraft
-// ? @desc    Add an aircraft
+// ? @desc    Create an aircraft
 // ! @access  Private
 router.post(
-  '/aircraft',
+  '/',
   [
     auth,
     [
@@ -99,5 +92,19 @@ router.post(
     }
   }
 );
+
+// * @route   GET /api/aircraft
+// ? @desc    Get all aircrafts
+// ! @access  Private
+router.get('/', auth, async (req, res) => {
+  try {
+    const dbAircrafts = await Aircraft.find();
+
+    res.json(dbAircrafts);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send(`Server error`);
+  }
+})
 
 module.exports = router;

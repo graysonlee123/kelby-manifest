@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Define base routes
-app.use('/api', require('./api/api'));
+app.use('/api/aircraft', require('./api/aircraft'));
 
 // Connect to the database
 mongoose
