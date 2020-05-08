@@ -257,4 +257,18 @@ router.get("/:id", auth, async (req, res) => {
   }
 });
 
+// * @route   DELETE /api/aircraft/:id
+// ? @desc    Delete aircraft by ID
+// ! @access  Private
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    const dbAircrafts = await Aircraft.findByIdAndDelete(req.params.id);
+
+    res.json(dbAircrafts);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send(`Server error`);
+  }
+});
+
 module.exports = router;
