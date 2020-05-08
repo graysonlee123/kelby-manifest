@@ -20,112 +20,65 @@ router.post(
   [
     auth,
     [
-      body('gross').custom((value) => {
-        if (!value) return Promise.reject('gross is required!');
-
-        if (!value.weight)
-          return Promise.reject('No weight provided for gross');
-
-        if (isNaN(!value.weight))
-          return Promise.reject('gross.weight must be a number!');
-
-        return true;
-      }),
-      body('usefulLoad').custom((value) => {
-        if (!value) return Promise.reject('usefulLoad is required!');
-
-        if (!value.weight)
-          return Promise.reject('No weight provided for usefulLoad');
-
-        if (isNaN(!value.weight))
-          return Promise.reject('usefulLoad.weight must be a number!');
-
-        return true;
-      }),
-      body('empty').custom((value) => {
-        if (!value) return Promise.reject('empty is required!');
-
-        if (!value.weight) return Promise.reject('No weight provided!');
-        if (!value.arm) return Promise.reject('No arm provided!');
-        if (!value.moment) return Promise.reject('No moment provided!');
-
-        if (isNaN(value.weight) || isNaN(value.arm) || isNaN(value.moment))
-          return Promise.reject('Must be numbers!');
-
-        return true;
-      }),
-      body('frontSeat').custom((value) => {
-        if (!value) return Promise.reject('frontSeat is required!');
-
-        if (!value.weight) return Promise.reject('No weight provided!');
-        if (!value.arm) return Promise.reject('No arm provided!');
-        if (!value.moment) return Promise.reject('No moment provided!');
-
-        if (isNaN(value.weight) || isNaN(value.arm) || isNaN(value.moment))
-          return Promise.reject('Must be numbers!');
-
-        return true;
-      }),
-      body('middleSeat').custom((value) => {
-        if (!value) return Promise.reject('middleSeat is required!');
-
-        if (!value.weight) return Promise.reject('No weight provided!');
-        if (!value.arm) return Promise.reject('No arm provided!');
-        if (!value.moment) return Promise.reject('No moment provided!');
-
-        if (isNaN(value.weight) || isNaN(value.arm) || isNaN(value.moment))
-          return Promise.reject('Must be numbers!');
-
-        return true;
-      }),
-      body('rearSeat').custom((value) => {
-        if (!value) return Promise.reject('rearSeat is required!');
-
-        if (!value.weight) return Promise.reject('No weight provided!');
-        if (!value.arm) return Promise.reject('No arm provided!');
-        if (!value.moment) return Promise.reject('No moment provided!');
-
-        if (isNaN(value.weight) || isNaN(value.arm) || isNaN(value.moment))
-          return Promise.reject('Must be numbers!');
-
-        return true;
-      }),
-      body('noseBaggage').custom((value) => {
-        if (!value) return Promise.reject('noseBaggage is required!');
-
-        if (!value.weight) return Promise.reject('No weight provided!');
-        if (!value.arm) return Promise.reject('No arm provided!');
-        if (!value.moment) return Promise.reject('No moment provided!');
-
-        if (isNaN(value.weight) || isNaN(value.arm) || isNaN(value.moment))
-          return Promise.reject('Must be numbers!');
-
-        return true;
-      }),
-      body('mainBaggage').custom((value) => {
-        if (!value) return Promise.reject('mainBaggage is required!');
-
-        if (!value.weight) return Promise.reject('No weight provided!');
-        if (!value.arm) return Promise.reject('No arm provided!');
-        if (!value.moment) return Promise.reject('No moment provided!');
-
-        if (isNaN(value.weight) || isNaN(value.arm) || isNaN(value.moment))
-          return Promise.reject('Must be numbers!');
-
-        return true;
-      }),
-      body('rearBaggage').custom((value) => {
-        if (!value) return Promise.reject('rearBaggage is required!');
-
-        if (!value.weight) return Promise.reject('No weight provided!');
-        if (!value.arm) return Promise.reject('No arm provided!');
-        if (!value.moment) return Promise.reject('No moment provided!');
-
-        if (isNaN(value.weight) || isNaN(value.arm) || isNaN(value.moment))
-          return Promise.reject('Must be numbers!');
-
-        return true;
-      }),
+      // General Info
+      check("generalInfo.tailNum", "Tail Number is required").not().isEmpty(),
+      check("generalInfo.model", "Model is required").not().isEmpty(),
+      check("generalInfo.maxGasFuel", "Maximum Gas Fuel is required").not().isEmpty(),
+      check("generalInfo.wingSurfaceArea", "Wing Surface Area is required").not().isEmpty(),
+      check("generalInfo.thrust", "Thrust is required").not().isEmpty(),
+      check("generalInfo.takeOffSpeed", "Take off speed is required").not().isEmpty(),
+      check("generalInfo.coeficientOfLift", "Coeficient Of Lift is required").not().isEmpty(),
+      
+      // Weight and Balance
+      check("weightAndBalance.maxFuel", "Max Fuel is required").not().isEmpty(),
+      check("weightAndBalance.grossWeight", "Gross Weight is required").not().isEmpty(),
+      check("weightAndBalance.usefulLoad", "Useful Load is required").not().isEmpty(),
+      check("weightAndBalance.emptyWeight", "Empty Weight is required").not().isEmpty(),
+      check("weightAndBalance.emptyWeightArm", "Empty Weight Arm is required").not().isEmpty(),
+      check("weightAndBalance.frontSeatArm", "Front Seat Arm is required").not().isEmpty(),
+      check("weightAndBalance.middleSeatArm", "Middle Seat Arm is required").not().isEmpty(),
+      check("weightAndBalance.rearSeatArm", "Rear Seat Arm is required").not().isEmpty(),
+      check("weightAndBalance.fuelArm", "Fuel Arm is required").not().isEmpty(),
+      check("weightAndBalance.baggageAreaArm", "Baggage Area Arm is required").not().isEmpty(),
+      check("weightAndBalance.rearBaggageArm", "Rear Baggage Arm is required").not().isEmpty(),
+      check("weightAndBalance.noseBaggageAreaArm", "Nose Baggage Area Arm is required").not().isEmpty(),
+      check("weightAndBalance.lowCGRAngle", "Low CGR Angle is required").not().isEmpty(),
+      check("weightAndBalance.highCG", "High CG is required").not().isEmpty(),
+      
+      // Take Off and Landing Distances
+      check("takeOffAndLandingDistances.takeOff.std.roll", "Roll is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.takeOff.std.clear", "Clear is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.takeOff.plus10.roll", "Roll is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.takeOff.plus10.clear", "Clear is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.takeOff.plus20.roll", "Roll is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.takeOff.plus20.clear", "Clear is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.takeOff.plus30.roll", "Roll is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.takeOff.plus30.clear", "Clear is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.takeOff.plus40.roll", "Roll is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.takeOff.plus40.clear", "Clear is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.landing.std.roll", "Roll is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.landing.std.clear", "Clear is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.landing.plus10.roll", "Roll is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.landing.plus10.clear", "Clear is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.landing.plus20.roll", "Roll is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.landing.plus20.clear", "Clear is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.landing.plus30.roll", "Roll is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.landing.plus30.clear", "Clear is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.landing.plus40.roll", "Roll is required").not().isEmpty(),
+      check("takeOffAndLandingDistances.landing.plus40.clear", "Clear is required").not().isEmpty(),
+      
+      // CG Envelope
+      check("cgEnvelope.knee.x", "X Value is required").not().isEmpty(),
+      check("cgEnvelope.knee.y", "Y Value is required").not().isEmpty(),
+      check("cgEnvelope.lowerLeftCorner.x", "X Value is required").not().isEmpty(),
+      check("cgEnvelope.lowerLeftCorner.y", "Y Value is required").not().isEmpty(),
+      check("cgEnvelope.upperLeftCorner.x", "X Value is required").not().isEmpty(),
+      check("cgEnvelope.upperLeftCorner.y", "Y Value is required").not().isEmpty(),
+      check("cgEnvelope.lowerRightCorner.x", "X Value is required").not().isEmpty(),
+      check("cgEnvelope.lowerRightCorner.y", "Y Value is required").not().isEmpty(),
+      check("cgEnvelope.upperRightCorner.x", "X Value is required").not().isEmpty(),
+      check("cgEnvelope.upperRightCorner.y", "Y Value is required").not().isEmpty(),
+      
     ],
   ],
   async (req, res) => {
@@ -135,64 +88,8 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const {
-      gross,
-      usefulLoad,
-      empty,
-      frontSeat,
-      middleSeat,
-      rearSeat,
-      noseBaggage,
-      mainBaggage,
-      rearBaggage,
-    } = req.body;
-
-    const body = {
-      usefulLoad: {
-        weight: usefulLoad.weight,
-      },
-      gross: {
-        weight: gross.weight,
-      },
-      empty: {
-        weight: empty.weight,
-        arm: empty.arm,
-        moment: empty.moment,
-      },
-      frontSeat: {
-        weight: frontSeat.weight,
-        arm: frontSeat.arm,
-        moment: frontSeat.moment,
-      },
-      middleSeat: {
-        weight: middleSeat.weight,
-        arm: middleSeat.arm,
-        moment: middleSeat.moment,
-      },
-      rearSeat: {
-        weight: rearSeat.weight,
-        arm: rearSeat.arm,
-        moment: rearSeat.moment,
-      },
-      noseBaggage: {
-        weight: noseBaggage.weight,
-        arm: noseBaggage.arm,
-        moment: noseBaggage.moment,
-      },
-      mainBaggage: {
-        weight: mainBaggage.weight,
-        arm: mainBaggage.arm,
-        moment: mainBaggage.moment,
-      },
-      rearBaggage: {
-        weight: rearBaggage.weight,
-        arm: rearBaggage.arm,
-        moment: rearBaggage.moment,
-      },
-    };
-
     try {
-      const dbAircraft = new Aircraft(body);
+      const dbAircraft = new Aircraft(req.body);
       const response = await dbAircraft.save();
 
       res.json({ response });

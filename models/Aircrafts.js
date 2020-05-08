@@ -81,7 +81,7 @@ const AircraftSchema = new mongoose.Schema({
       x: Number,
       y: Number,
     },
-    lowerLeft: {
+    lowerLeftCorner: {
       x: Number,
       y: Number,
     },
@@ -89,7 +89,7 @@ const AircraftSchema = new mongoose.Schema({
       x: Number,
       y: Number,
     },
-    lowerRight: {
+    lowerRightCorner: {
       x: Number,
       y: Number,
     },
